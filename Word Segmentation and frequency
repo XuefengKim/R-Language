@@ -1,0 +1,29 @@
+## 安装包
+install.packages("readxl")
+install.packages("stopwords")
+install.packages("tidyverse")
+install.packages("dplyr")
+install.packages("writexl")
+
+## 正文
+
+library(readxl) #读excel的包
+
+text <- read_excel("/Users/mac/Documents/wateringequipment.xlsx") #读表并赋值给text
+
+library(stopwords) #英文停用词包
+
+token <- tokenize_words(text$`商品名称(英文)`,stopwords = stopwords::stopwords("en"))  #应用停用词来分词（停用词在附录标出），并赋值给token
+
+library(tidyverse) #支持管道符使用的包
+library(dplyr) #支持dataframe运算的包
+
+word_freq <- 
+         unlist(token) %>%  
+         as.vector() %>% #将数据格式转换为向量，并传给下一个函数的首值
+         jiebaR::freq() %>%  #统计词频，形成dataframe（第一列char存储分词结果，第二列freq存储频率）
+         dplyr::arrange(, desc(freq)) #倒排
+    
+
+library(writexl) #导出excel包
+write_xlsx(token, "/Users/mac/Documents/token.xlsx") #导出文件
