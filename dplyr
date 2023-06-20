@@ -1,0 +1,14 @@
+## 查看数据属性
+str(flights)                      #查看数据变量
+summary(flights)                  #查看数据基本信息
+
+## 选择及筛选语句
+filter(word_freq, char == 'shoes' | freq >100) %>%            #char为shoes 或 Freq大于100 的 所有结果
+select(,char)             #选择要哪一个列
+
+filter(word_freq, char %in% word_freq2$char)          #通过in实现inner join的效果
+
+## 排序语句
+barrange(flights, desc(arr_delay))        #从大到小排序
+
+## 家人们，dplyr 平替 SQLite 太香了
