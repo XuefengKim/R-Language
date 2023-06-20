@@ -1,15 +1,30 @@
 ## 查看数据属性
-str(flights)                      #查看数据变量
-summary(flights)                  #查看数据基本信息
+str(flights)                              #查看数据变量
+summary(flights)                          #查看数据基本信息
 
-## 选择及筛选语句
-filter(word_freq, char == 'shoes' | freq >100) %>%            #char为shoes 或 Freq大于100 的 所有结果
-filter(flights, !is.na(dep_delay))            #非空
-select(,char)             #选择要哪一个列
+## 筛选语句
+filter(word_freq, char == 'shoes' | freq >100)                #char为shoes 或 Freq大于100 的 所有结果
+filter(flights, !is.na(dep_delay))                            #非空
+filter(word_freq, char %in% word_freq2$char)                  #通过in实现inner join的效果
 
-filter(word_freq, char %in% word_freq2$char)          #通过in实现inner join的效果
+## 选择语句
+select(,char)                             #选择要哪一个列
+
+## 增加列
+mutate(flights_sml, gain = dep_delay - arr_delay, speed = distance / air_time * 60)                             #可以基于已有数据，通过计算增加新列
+mutate(flights_sml, gain = dep_delay - arr_delay, hours = air_time / 60, gain_per_hour = gain / hours)
+transmute(flights, gain = dep_delay - arr_delay, hours = air_time / 60, gain_per_hour = gain / hours)           #只保留新列
 
 ## 排序语句
-barrange(flights, desc(arr_delay))        #从大到小排序
+arrange(flights, year, month, day)        #升序排序
+arrange(flights, desc(arr_delay))         #从大到小排序
+
+## 分组计算
+mtcars %>% group_by(,cyl) %>% summarise(,sum(drat))          #根据cyl分组并加和计算drat
+
+## 重命名列
+rename(flights, tail_num = tailnum)
+
+
 
 ## 家人们，dplyr 平替 SQLite 太香了
