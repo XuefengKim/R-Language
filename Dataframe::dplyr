@@ -38,4 +38,9 @@ data <- data.frame(
 # 2. 数字单列则为num, 引号扩起来则为chr
 # 3. 输入百分号会报错
 
+## 查看数据
+表名 %>% head()				#查看前几行
+
+
+## 参考链接：https://www.jianshu.com/p/9cba000c2b54
 ## 家人们，dplyr 平替 SQLite 太香了
